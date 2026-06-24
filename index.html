@@ -1746,5 +1746,124 @@ function toggleBio(id, btn) {
   });
 })();
 </script>
+<!-- BACKGROUND MUSIC -->
+<audio id="bg-music" loop preload="auto">
+  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3" type="audio/mpeg">
+</audio>
+
+<!-- MUSIC TOGGLE BUTTON -->
+<button id="music-btn" aria-label="Toggle background music" title="Toggle music">
+  <span id="music-icon">♪</span>
+  <span id="music-label">Music</span>
+</button>
+
+<style>
+  #music-btn {
+    position: fixed;
+    bottom: 28px;
+    left: 28px;
+    z-index: 999;
+    background: var(--white);
+    border: 2px solid transparent;
+    background-clip: padding-box;
+    border-radius: 50px;
+    padding: 10px 18px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(128,0,255,0.2);
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #8000ff;
+    transition: all 0.3s ease;
+    outline: 2px solid #8000ff;
+  }
+  #music-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(128,0,255,0.3);
+    background: linear-gradient(135deg, #fff5f9, #f8f0ff);
+  }
+  #music-icon {
+    font-size: 1.1rem;
+    display: inline-block;
+    animation: pulse-note 1.8s ease-in-out infinite;
+  }
+  #music-btn.playing #music-icon {
+    animation: spin-note 0.6s linear infinite alternate;
+  }
+  #music-btn.muted #music-icon {
+    animation: none;
+    opacity: 0.5;
+  }
+  @keyframes pulse-note {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.25) rotate(8deg); }
+  }
+  @keyframes spin-note {
+    0% { transform: rotate(-10deg) scale(1.1); }
+    100% { transform: rotate(10deg) scale(1.2); }
+  }
+</style>
+
+<script>
+(function() {
+  var audio = document.getElementById('bg-music');
+  var btn   = document.getElementById('music-btn');
+  var icon  = document.getElementById('music-icon');
+  var label = document.getElementById('music-label');
+  var playing = false;
+
+  audio.volume = 0.25;
+
+  function startMusic() {
+    audio.play().then(function() {
+      playing = true;
+      btn.classList.add('playing');
+      btn.classList.remove('muted');
+      icon.textContent = '♪';
+      label.textContent = 'Music On';
+    }).catch(function() {});
+  }
+
+  function stopMusic() {
+    audio.pause();
+    playing = false;
+    btn.classList.remove('playing');
+    btn.classList.add('muted');
+    icon.textContent = '♩';
+    label.textContent = 'Music Off';
+  }
+
+  // Try autoplay on first user interaction
+  function onFirstInteraction() {
+    if (!playing) startMusic();
+    document.removeEventListener('click', onFirstInteraction);
+    document.removeEventListener('scroll', onFirstInteraction);
+  }
+  document.addEventListener('click', onFirstInteraction);
+  document.addEventListener('scroll', onFirstInteraction);
+
+  // Try autoplay immediately (works in some browsers)
+  audio.play().then(function() {
+    playing = true;
+    btn.classList.add('playing');
+    label.textContent = 'Music On';
+  }).catch(function() {
+    label.textContent = 'Play Music';
+  });
+
+  // Toggle button
+  btn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    if (playing) {
+      stopMusic();
+    } else {
+      startMusic();
+    }
+  });
+})();
+</script>
 </body>
 </html>
