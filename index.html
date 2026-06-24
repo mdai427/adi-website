@@ -1,0 +1,1750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Artistic Directors International | Learn. Lead. Inspire.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --pink: #ff0055;
+    --purple: #8000ff;
+    --blue: #0044ff;
+    --gradient: linear-gradient(135deg, #ff0055, #8000ff, #0044ff);
+    --bg-light: #f2f2f2;
+    --text: #000000;
+    --text-muted: #4e4e53;
+    --white: #ffffff;
+    --radius-lg: 16px;
+    --radius-pill: 50px;
+    --shadow-card: 0 4px 20px rgba(0,0,0,0.08);
+    --shadow-hero: 0 20px 60px rgba(0,0,0,0.2);
+    --transition: 0.3s ease;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Manrope', sans-serif;
+    color: var(--text);
+    background: var(--white);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* UTILITIES */
+  .gradient-text {
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .gradient-btn {
+    background: var(--gradient);
+    color: var(--white);
+    border: none;
+    border-radius: var(--radius-pill);
+    padding: 12px 28px;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: inline-block;
+    text-decoration: none;
+    transition: opacity var(--transition), transform var(--transition), box-shadow var(--transition);
+    letter-spacing: 0.02em;
+  }
+  .gradient-btn:hover { opacity: 0.88; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(128,0,255,0.25); }
+
+  .outline-btn {
+    background: var(--white);
+    color: var(--text);
+    border: 1.5px solid var(--text);
+    border-radius: var(--radius-pill);
+    padding: 12px 28px;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: inline-block;
+    text-decoration: none;
+    transition: all var(--transition);
+  }
+  .outline-btn:hover {
+    background: var(--gradient);
+    color: var(--white);
+    border-color: transparent;
+    box-shadow: 0 8px 24px rgba(128,0,255,0.25);
+  }
+
+  .section-label {
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    display: inline-block;
+    margin-bottom: 16px;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* REVEAL ANIMATIONS */
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: opacity 0.65s ease, transform 0.65s ease;
+  }
+  .js-reveal-ready .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* NAVIGATION */
+  #nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: var(--white);
+    transition: box-shadow var(--transition);
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+  }
+  #nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.1); }
+
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 32px;
+    height: 70px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .nav-logo img {
+    height: 70px;
+    width: auto;
+    display: block;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    list-style: none;
+  }
+  .nav-links a {
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text);
+    text-decoration: none;
+    transition: color var(--transition);
+    position: relative;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--gradient);
+    transform: scaleX(0);
+    transition: transform var(--transition);
+  }
+  .nav-links a:hover { color: var(--purple); }
+  .nav-links a:hover::after { transform: scaleX(1); }
+
+  .nav-cta { flex-shrink: 0; }
+
+  /* Hamburger */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 8px;
+    z-index: 1100;
+  }
+  .hamburger span {
+    display: block;
+    width: 26px;
+    height: 2px;
+    background: var(--text);
+    border-radius: 2px;
+    transition: all var(--transition);
+  }
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* Mobile overlay */
+  .nav-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: var(--white);
+    z-index: 1050;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .nav-overlay.open { display: flex; opacity: 1; }
+  .nav-overlay a {
+    font-family: 'Manrope', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text);
+    text-decoration: none;
+    transition: color var(--transition);
+  }
+  .nav-overlay a:hover { color: var(--purple); }
+
+  /* HERO */
+  #hero {
+    background: var(--text);
+    padding: 0;
+    margin-top: 72px;
+  }
+
+  .hero-image-container {
+    position: relative;
+    border-radius: 0;
+    overflow: hidden;
+    height: 640px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.48);
+  }
+
+  .hero-card {
+    position: relative;
+    z-index: 2;
+    background: var(--white);
+    border-radius: 24px;
+    box-shadow: var(--shadow-hero);
+    padding: 48px 56px;
+    max-width: 580px;
+    width: calc(100% - 48px);
+    text-align: center;
+  }
+
+  .hero-eyebrow {
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .hero-heading {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: 2.6rem;
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+
+  .hero-coming-soon {
+    display: inline-block;
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    border: 2px dashed #8000ff;
+    color: #8000ff;
+    -webkit-text-fill-color: #8000ff;
+    border-radius: 50px;
+    padding: 10px 28px;
+    margin-top: 8px;
+  }
+
+  .hero-stay-tuned {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: 1.5rem;
+    color: #333;
+    margin: 0 0 16px;
+    text-align: center;
+  }
+
+  .hero-date {
+    font-family: 'DM Serif Display', serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 2rem;
+    color: var(--text);
+    margin-bottom: 18px;
+  }
+
+  .hero-time-badge {
+    display: inline-block;
+    border-radius: var(--radius-pill);
+    padding: 10px 24px;
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 20px;
+    background: var(--white);
+    border: 1.5px solid #ccc;
+  }
+
+  .hero-countdown {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+
+  .countdown-unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 52px;
+  }
+
+  .countdown-number {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1;
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .countdown-label {
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+
+  .countdown-sep {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.8rem;
+    color: var(--text-muted);
+    line-height: 1;
+    align-self: flex-start;
+    padding-top: 2px;
+  }
+
+  .event-concluded {
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border: 1px dashed #ccc;
+    border-radius: var(--radius-pill);
+    padding: 8px 24px;
+    display: inline-block;
+    margin-bottom: 20px;
+  }
+
+  .hero-tagline {
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 28px;
+  }
+
+  .hero-btns {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* OUR PURPOSE */
+  #adi-purpose {
+    background: var(--bg-light);
+    padding: 80px 0;
+  }
+
+  .purpose-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+  }
+
+  .purpose-left h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 3rem;
+    font-weight: 400;
+    line-height: 1.1;
+    color: var(--text);
+    margin: 0 0 20px;
+  }
+
+  .purpose-left p {
+    font-family: 'Manrope', sans-serif;
+    font-size: 1rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-bottom: 32px;
+  }
+
+  .purpose-img {
+    width: 100%;
+    max-width: 420px;
+    border-radius: 20px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .purpose-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .purpose-card {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    padding: 32px 32px 32px 28px;
+    position: relative;
+    border-left: 5px solid transparent;
+    transition: transform var(--transition), box-shadow var(--transition);
+  }
+  .purpose-card:nth-child(1) { border-left-color: #ff0055; }
+  .purpose-card:nth-child(2) { border-left-color: #8000ff; }
+  .purpose-card:nth-child(3) { border-left-color: #0044ff; }
+  .purpose-card:hover { transform: translateY(-3px); }
+  .purpose-card:nth-child(1):hover { box-shadow: 0 0 40px 8px rgba(255,0,85,0.18), 0 12px 36px rgba(255,0,85,0.1); background: linear-gradient(135deg, #fff5f7 0%, #ffffff 100%); }
+  .purpose-card:nth-child(2):hover { box-shadow: 0 0 40px 8px rgba(128,0,255,0.18), 0 12px 36px rgba(128,0,255,0.1); background: linear-gradient(135deg, #f8f0ff 0%, #ffffff 100%); }
+  .purpose-card:nth-child(3):hover { box-shadow: 0 0 40px 8px rgba(0,68,255,0.18), 0 12px 36px rgba(0,68,255,0.1); background: linear-gradient(135deg, #f0f4ff 0%, #ffffff 100%); }
+
+  .purpose-icon {
+    font-size: 2rem;
+    margin-bottom: 16px;
+  }
+
+  .purpose-card-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin-bottom: 12px;
+  }
+  .purpose-card:nth-child(1) .purpose-card-title { color: #ff0055; }
+  .purpose-card:nth-child(2) .purpose-card-title { color: #8000ff; }
+  .purpose-card:nth-child(3) .purpose-card-title { color: #0044ff; }
+
+  .purpose-card-body {
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  .values-list {
+    list-style: none;
+    padding: 0;
+    margin: 12px 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .values-list li {
+    font-family: 'Manrope', sans-serif;
+    font-size: 1rem;
+    color: var(--text);
+  }
+  .val-letter {
+    font-weight: 800;
+    font-size: 1.1rem;
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  @media (max-width: 900px) {
+    .purpose-layout { grid-template-columns: 1fr; gap: 40px; }
+    .purpose-img { max-width: 100%; }
+  }
+
+  .values-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .values-tag {
+    background: none;
+    border: 1.5px solid #ccc;
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 5px 14px;
+    border-radius: var(--radius-pill);
+  }
+  .values-tag span {
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* LEADERSHIP */
+  #adi-leadership {
+    background: var(--bg-light);
+    padding: 80px 0 0;
+  }
+
+  .leadership-header {
+    text-align: center;
+    margin-bottom: 56px;
+  }
+
+  .section-h2-italic {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: 2.4rem;
+    color: var(--text);
+    margin-top: 8px;
+  }
+
+  .founders-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    margin-bottom: 0;
+  }
+
+  .founder-card {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    padding: 40px 36px;
+    box-shadow: var(--shadow-card);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: transform var(--transition);
+  }
+  .founder-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0 50px 10px rgba(128,0,255,0.15), 0 16px 40px rgba(255,0,85,0.1);
+    background: linear-gradient(135deg, #fff5f9 0%, #f8f0ff 50%, #f0f4ff 100%);
+  }
+
+  .founder-photo {
+    width: 180px;
+    height: 180px;
+    object-fit: cover;
+    object-position: top center;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-bottom: 24px;
+    border: 4px solid transparent;
+    background: linear-gradient(white, white) padding-box,
+                linear-gradient(135deg, #ff0055, #8000ff, #0044ff) border-box;
+    transition: opacity 0.4s ease;
+    opacity: 1;
+  }
+  .founder-photo.loaded { opacity: 1; }
+
+  .founder-info { width: 100%; }
+
+  .founder-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.5rem;
+    line-height: 1.2;
+    margin-bottom: 6px;
+  }
+
+  .founder-title {
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+  }
+
+  .bio-text {
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.93rem;
+    color: var(--text);
+    line-height: 1.75;
+    overflow: hidden;
+    max-height: 5em;
+    transition: max-height 0.6s ease;
+    text-align: left;
+  }
+  .bio-text.expanded { max-height: 1000px; }
+
+  .bio-toggle {
+    background: none;
+    cursor: pointer;
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    padding: 8px 24px;
+    margin-top: 14px;
+    display: block;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    border: 2px solid #8000ff;
+    border-radius: 50px;
+    text-decoration: none;
+    color: #8000ff;
+    -webkit-text-fill-color: #8000ff;
+  }
+
+  /* Advisory Board */
+  .advisory-section {
+    background: var(--white);
+    padding: 60px 0 80px;
+    margin-top: 60px;
+  }
+
+  .advisory-h3 {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .advisory-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+  }
+
+  .advisory-card {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    padding: 28px 20px;
+    text-align: center;
+    box-shadow: var(--shadow-card);
+    transition: transform var(--transition), box-shadow var(--transition);
+  }
+  .advisory-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0 50px 10px rgba(128,0,255,0.15), 0 16px 40px rgba(255,0,85,0.1);
+    background: linear-gradient(135deg, #fff5f9 0%, #f8f0ff 50%, #f0f4ff 100%);
+  }
+
+  .advisory-photo {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    object-position: top center;
+    border-radius: 50%;
+    margin: 0 auto 16px;
+    display: block;
+    transition: opacity 0.4s ease;
+    opacity: 1;
+  }
+  .advisory-photo.loaded { opacity: 1; }
+
+  .advisory-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.05rem;
+    line-height: 1.3;
+    margin-bottom: 6px;
+  }
+
+  .advisory-title {
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.78rem;
+    font-style: italic;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+    line-height: 1.4;
+  }
+
+  .advisory-bio {
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.82rem;
+    color: var(--text);
+    line-height: 1.55;
+  }
+
+  /* MEMBERSHIP */
+  #adi-membership {
+    background: var(--white);
+    padding: 80px 0;
+  }
+
+  .membership-header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  .membership-h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.8rem;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+
+  .membership-sub {
+    font-family: 'Manrope', sans-serif;
+    font-size: 1rem;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+  }
+
+  .membership-badge {
+    display: inline-block;
+    background: var(--gradient);
+    color: var(--white);
+    border-radius: var(--radius-pill);
+    padding: 10px 28px;
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+
+  .membership-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    align-items: start;
+  }
+
+  .membership-card {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    border: 1px solid #e8e8e8;
+    padding: 36px;
+    box-shadow: var(--shadow-card);
+    transition: transform var(--transition);
+  }
+  .membership-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0 50px 10px rgba(128,0,255,0.15), 0 16px 40px rgba(255,0,85,0.1);
+    background: linear-gradient(135deg, #fff5f9 0%, #f8f0ff 50%, #f0f4ff 100%);
+  }
+
+  .membership-card.pinnacle {
+    background: #fff8f9;
+    border: 2px solid transparent;
+    box-shadow: 0 0 0 2px var(--purple), var(--shadow-card);
+    position: relative;
+  }
+
+  .pinnacle-badge {
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--pink);
+    color: var(--white);
+    border-radius: var(--radius-pill);
+    padding: 4px 20px;
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .card-tier {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.5rem;
+    margin-bottom: 4px;
+  }
+  .membership-card.pinnacle .card-tier {
+    font-style: italic;
+    font-size: 1.8rem;
+  }
+
+  .card-subtitle {
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+  }
+
+  .card-affil {
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.85rem;
+    font-style: italic;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+  }
+
+  .card-price {
+    font-family: 'Manrope', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .card-price span { font-size: 1rem; font-weight: 500; color: var(--text-muted); }
+
+  .card-founding {
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+  }
+
+  .card-divider {
+    height: 1px;
+    background: #e8e8e8;
+    margin: 20px 0;
+  }
+
+  .card-list {
+    list-style: none;
+    margin-bottom: 16px;
+  }
+  .card-list li {
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.9rem;
+    color: var(--text);
+    padding: 5px 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    line-height: 1.4;
+  }
+  .card-list li .check {
+    color: var(--purple);
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .card-list li .star {
+    color: var(--pink);
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .card-section-label {
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin: 16px 0 8px;
+  }
+
+  .card-ctas {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 24px;
+  }
+  .card-ctas .gradient-btn { text-align: center; width: 100%; }
+
+  /* ENGAGE */
+  #adi-resources {
+    background: var(--bg-light);
+    padding: 80px 0;
+  }
+
+  .engage-header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  .engage-h2 {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: 2.4rem;
+    text-align: center;
+    margin-bottom: 8px;
+  }
+
+  .engage-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+  }
+
+  .engage-card {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    padding: 40px 32px;
+    box-shadow: var(--shadow-card);
+    text-align: center;
+    transition: transform var(--transition), box-shadow var(--transition);
+  }
+  .engage-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0 50px 10px rgba(128,0,255,0.15), 0 16px 40px rgba(255,0,85,0.1);
+    background: linear-gradient(135deg, #fff5f9 0%, #f8f0ff 50%, #f0f4ff 100%);
+  }
+
+  .engage-icon-wrap {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: var(--gradient);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    margin: 0 auto 20px;
+  }
+
+  .engage-card-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+    color: var(--text);
+  }
+
+  .engage-card-body {
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.92rem;
+    color: var(--text-muted);
+    line-height: 1.65;
+    margin-bottom: 20px;
+  }
+
+  .coming-soon-badge {
+    display: inline-block;
+    border-radius: var(--radius-pill);
+    padding: 5px 16px;
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: 1.5px solid var(--purple);
+    margin-bottom: 16px;
+  }
+  .coming-soon-badge span {
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* CONTACT */
+  #adi-contact {
+    background: var(--white);
+    padding: 80px 0;
+  }
+
+  .contact-header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .contact-h2 {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: 2.2rem;
+    margin-bottom: 16px;
+  }
+
+  .contact-email {
+    font-family: 'Manrope', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text);
+    text-decoration: none;
+    display: inline-block;
+    transition: color var(--transition);
+  }
+  .contact-email:hover { color: var(--purple); }
+
+  .contact-form {
+    max-width: 600px;
+    margin: 36px auto 0;
+  }
+
+  .form-group {
+    margin-bottom: 18px;
+  }
+
+  .form-group label {
+    display: block;
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 7px;
+    color: var(--text);
+  }
+
+  .form-group input,
+  .form-group textarea {
+    width: 100%;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 14px 18px;
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.95rem;
+    color: var(--text);
+    background: var(--white);
+    outline: none;
+    transition: box-shadow var(--transition), border-color var(--transition);
+  }
+  .form-group input:focus,
+  .form-group textarea:focus {
+    border-color: var(--purple);
+    box-shadow: 0 0 0 3px rgba(128,0,255,0.15);
+  }
+  .form-group textarea { resize: vertical; min-height: 130px; }
+
+  .form-submit {
+    width: 100%;
+    padding: 16px;
+    font-size: 1rem;
+    letter-spacing: 0.04em;
+    text-align: center;
+  }
+
+  .form-success {
+    display: none;
+    text-align: center;
+    padding: 28px;
+    border-radius: var(--radius-lg);
+    background: #f0fff4;
+    border: 1px solid #48bb78;
+    font-family: 'Manrope', sans-serif;
+    font-size: 1rem;
+    color: #276749;
+    margin-top: 20px;
+  }
+  .form-success.show { display: block; }
+
+  .form-error-msg {
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.8rem;
+    color: #e53e3e;
+    margin-top: 4px;
+    display: none;
+  }
+  .form-group.invalid .form-error-msg { display: block; }
+  .form-group.invalid input,
+  .form-group.invalid textarea { border-color: #e53e3e; box-shadow: 0 0 0 3px rgba(229,62,62,0.15); }
+
+  .social-links {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 40px;
+  }
+
+  .social-link {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: #f2f2f2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all var(--transition);
+    color: var(--text);
+  }
+  .social-link:hover {
+    background: var(--gradient);
+    transform: translateY(-2px);
+  }
+  .social-link:hover svg { fill: var(--white); }
+  .social-link svg { width: 20px; height: 20px; fill: var(--text); transition: fill var(--transition); }
+
+  /* FOOTER */
+  footer {
+    background: #0a0a0a;
+    padding: 60px 0 36px;
+    text-align: center;
+  }
+
+  .footer-logo img {
+    height: 40px;
+    width: auto;
+    margin-bottom: 20px;
+    filter: brightness(0) invert(1);
+    opacity: 0.85;
+  }
+
+  .footer-tagline {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: 1.4rem;
+    margin-bottom: 28px;
+  }
+
+  .footer-socials {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    margin-bottom: 28px;
+  }
+
+  .footer-social {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all var(--transition);
+  }
+  .footer-social:hover { background: var(--gradient); transform: translateY(-2px); }
+  .footer-social svg { width: 18px; height: 18px; fill: var(--white); }
+
+  .footer-copy {
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.82rem;
+    color: #666;
+    margin-bottom: 12px;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .footer-links a {
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.82rem;
+    color: #555;
+    text-decoration: none;
+    transition: color var(--transition);
+  }
+  .footer-links a:hover { color: var(--white); }
+
+  /* FOCUS VISIBLE */
+  :focus-visible { outline: 2px solid var(--purple); outline-offset: 3px; }
+
+  /* RESPONSIVE */
+  @media (max-width: 1100px) {
+    .advisory-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  @media (max-width: 900px) {
+    .nav-links, .nav-cta { display: none; }
+    .hamburger { display: flex; }
+
+    .purpose-cards,
+    .engage-grid,
+    .membership-grid { grid-template-columns: 1fr; }
+
+    .founders-grid { grid-template-columns: 1fr; }
+
+    .advisory-grid { grid-template-columns: repeat(2, 1fr); }
+
+    .hero-card { padding: 36px 28px; }
+    .hero-heading { font-size: 2rem; }
+    .hero-date { font-size: 1.5rem; }
+
+    .section-h2 { font-size: 2rem; }
+    .section-h2-italic { font-size: 2rem; }
+    .membership-h2 { font-size: 2.2rem; }
+    .engage-h2 { font-size: 2rem; }
+    .contact-h2 { font-size: 1.8rem; }
+
+    .membership-card.pinnacle { margin-top: 24px; }
+  }
+
+  @media (max-width: 600px) {
+    #hero { padding: 0; }
+    .hero-image-container { height: 520px; border-radius: 0; }
+    .hero-card { padding: 28px 20px; max-width: 100%; }
+    .hero-heading { font-size: 1.7rem; }
+    .hero-btns { flex-direction: column; align-items: center; }
+
+    .advisory-grid { grid-template-columns: 1fr; }
+
+    .founder-card { flex-direction: column; }
+    .founder-photo { width: 100%; height: 220px; border-radius: 12px; }
+
+    .container { padding: 0 16px; }
+    #adi-purpose, #adi-membership, #adi-contact { padding: 56px 0; }
+    #adi-resources, #adi-leadership { padding: 56px 0 0; }
+    .advisory-section { padding: 40px 0 56px; }
+
+    .hero-countdown { gap: 8px; }
+    .countdown-number { font-size: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav id="nav" role="navigation" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo" aria-label="ADI Home">
+      <img src="https://storage.googleapis.com/msgsndr/AxLeagc9hye0zJda7oH7/media/6969bfa0b34b6437d5f7d1f2.png" alt="Artistic Directors International logo" height="44">
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="#adi-purpose">About</a></li>
+      <li><a href="#adi-leadership">Leadership</a></li>
+      <li><a href="#adi-membership">Membership</a></li>
+      <li><a href="#adi-resources">Engage</a></li>
+      <li><a href="#adi-contact">Contact</a></li>
+    </ul>
+    <a href="https://artisticdirectorsinternational.com/register" class="gradient-btn nav-cta" target="_blank" rel="noopener">Become a Member</a>
+    <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile overlay -->
+<div class="nav-overlay" id="navOverlay" role="dialog" aria-modal="true" aria-label="Mobile navigation">
+  <a href="#adi-purpose">About</a>
+  <a href="#adi-leadership">Leadership</a>
+  <a href="#adi-membership">Membership</a>
+  <a href="#adi-resources">Engage</a>
+  <a href="#adi-contact">Contact</a>
+  <a href="https://artisticdirectorsinternational.com/register" class="gradient-btn" target="_blank" rel="noopener">Become a Member</a>
+</div>
+
+<!-- HERO -->
+<section id="hero" aria-label="Hero section">
+  <div class="hero-image-container">
+    <img
+      src="https://storage.googleapis.com/msgsndr/AxLeagc9hye0zJda7oH7/media/6969bf8c65d73df13ae810da.jpg"
+      alt="ADI artistic background"
+      class="hero-bg"
+      loading="eager"
+    >
+    <div class="hero-overlay" aria-hidden="true"></div>
+    <div class="hero-card">
+      <p class="hero-eyebrow gradient-text">Learn. Lead. Inspire</p>
+      <h1 class="hero-heading gradient-text">OffStage Events</h1>
+      <p class="hero-stay-tuned">Stay tuned for our next event!</p>
+      <p class="hero-tagline">A global community for the visionaries shaping the future of the arts.</p>
+      <p class="hero-coming-soon">More details coming soon</p>
+    </div>
+  </div>
+</section>
+
+<!-- OUR PURPOSE -->
+<section id="adi-purpose" aria-labelledby="purpose-heading">
+  <div class="container">
+    <div class="purpose-layout">
+      <!-- LEFT: title + image -->
+      <div class="purpose-left reveal">
+        <h2 id="purpose-heading">Our Purpose</h2>
+        <p>Driving the evolution of artistic leadership through connection, education, and innovation.</p>
+        <img
+          src="https://storage.googleapis.com/msgsndr/AxLeagc9hye0zJda7oH7/media/6994e8628575958896eb34d0.png"
+          alt="Artistic leadership in action"
+          class="purpose-img"
+          loading="lazy"
+        >
+      </div>
+      <!-- RIGHT: stacked cards -->
+      <div class="purpose-cards">
+        <div class="purpose-card reveal">
+          <h3 class="purpose-card-title">Mission</h3>
+          <p class="purpose-card-body">ADI empowers Artistic Directors worldwide with leadership development, education, resources, and essential community.</p>
+        </div>
+        <div class="purpose-card reveal">
+          <h3 class="purpose-card-title">Vision</h3>
+          <p class="purpose-card-body">A world where Artistic Directors across all disciplines thrive as visionary leaders, equipped to shape the future of arts and culture.</p>
+        </div>
+        <div class="purpose-card reveal">
+          <h3 class="purpose-card-title">Values</h3>
+          <ul class="values-list">
+            <li><span class="val-letter">C</span>reativity</li>
+            <li><span class="val-letter">R</span>esponsibility</li>
+            <li><span class="val-letter">E</span>xcellence</li>
+            <li><span class="val-letter">A</span>uthenticity</li>
+            <li><span class="val-letter">T</span>ransformation</li>
+            <li><span class="val-letter">E</span>quity</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LEADERSHIP -->
+<section id="adi-leadership" aria-labelledby="leadership-heading">
+  <div class="container">
+    <div class="leadership-header reveal">
+      <span class="section-label gradient-text">Co-Founders</span>
+      <h2 class="section-h2-italic" id="leadership-heading">Meet the visionaries behind ADI.</h2>
+    </div>
+    <div class="founders-grid">
+      <article class="founder-card reveal" aria-label="Melissa M. Young">
+        <img
+          src="https://storage.googleapis.com/msgsndr/AxLeagc9hye0zJda7oH7/media/6969bfa865d73df958e81449.jpg"
+          alt="Melissa M. Young"
+          class="founder-photo"
+          width="140" height="170"
+          loading="lazy"
+        >
+        <div class="founder-info">
+          <h3 class="founder-name gradient-text">Melissa M. Young</h3>
+          <p class="founder-title">Co-Founder &amp; Chief Artistic Officer</p>
+          <p class="bio-text" id="bio-melissa">Melissa M. Young is a distinguished artistic leader and educator whose three-decade career blends visionary creativity, strategic leadership, and a deep commitment to advancing the performing arts. A Honduran American from Santa Ana, California, she trained at The Ailey School and earned graduate-level certificates in Leadership, Management, and Analytical Skills from Michigan State University's Eli Broad College of Business. She spent 30 transformative years with Dallas Black Dance Theatre, rising from company dancer to Artistic Director. She pioneered virtual programming connecting audiences across 40+ states and 35+ countries. Her artistic influence has appeared at The Kennedy Center, Lincoln Center, City Center, and The Joyce Theater. Today she also leads The Presence Whisperer and collaborates with the Serendipity Institute for Black Arts and Heritage.</p>
+          <button class="bio-toggle" onclick="toggleBio('bio-melissa', this)" aria-expanded="false" aria-controls="bio-melissa">Read More</button>
+        </div>
+      </article>
+      <article class="founder-card reveal" style="transition-delay:0.12s" aria-label="Sam Santiago, CDE">
+        <img
+          src="https://storage.googleapis.com/msgsndr/AxLeagc9hye0zJda7oH7/media/6969bfb04e42b940111feeb6.jpg"
+          alt="Sam Santiago, CDE"
+          class="founder-photo"
+          width="140" height="170"
+          loading="lazy"
+        >
+        <div class="founder-info">
+          <h3 class="founder-name gradient-text">Sam Santiago, CDE&#174;</h3>
+          <p class="founder-title">Co-Founder &amp; Chief Executive Officer</p>
+          <p class="bio-text" id="bio-sam">Sam Santiago is a seasoned corporate executive and international entrepreneur with 35 years of experience across travel, tourism, hospitality, logistics, entertainment, and global trade associations. A native of Puerto Rico, Sam holds education from the Universidad de Puerto Rico and is a Certified Diversity Executive&#174;. He served as leader of the American Airlines Foundation, was appointed Chair of the City of Dallas Arts and Culture Advisory Commission by Mayor Eric Johnson in 2019, and contributed to the 2018 Dallas Cultural Plan. He now serves as Global Advisor for Global Chamber Mexico, President of the Asociaci&#243;n Internacional de Hoteles Boutique, and co-founder and CEO of ADI.</p>
+          <button class="bio-toggle" onclick="toggleBio('bio-sam', this)" aria-expanded="false" aria-controls="bio-sam">Read More</button>
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <!-- Advisory Board -->
+  <div class="advisory-section" aria-labelledby="advisory-heading">
+    <div class="container">
+      <h3 class="advisory-h3 gradient-text reveal" id="advisory-heading">Advisory Board</h3>
+      <div class="advisory-grid">
+        <article class="advisory-card reveal">
+          <img src="https://assets.cdn.filesafe.space/AxLeagc9hye0zJda7oH7/media/69d83b0b9bcdf086d1f314d2.jpg" alt="Kirven Douthit-Boyd" class="advisory-photo" width="100" height="100" loading="lazy">
+          <h4 class="advisory-name gradient-text">Kirven Douthit-Boyd</h4>
+          <p class="advisory-title">Artistic Director, Saint Louis Dance Theatre</p>
+          <p class="advisory-bio">Trained at The Ailey School, performed with Alvin Ailey American Dance Theater 2004&#8211;2015, earned MFA from Hollins University.</p>
+        </article>
+        <article class="advisory-card reveal" style="transition-delay:0.08s">
+          <img src="https://assets.cdn.filesafe.space/AxLeagc9hye0zJda7oH7/media/69d83b2dd5a667daf65ca3ad.jpg" alt="Martine Elyse Philippe" class="advisory-photo" width="100" height="100" loading="lazy">
+          <h4 class="advisory-name gradient-text">Martine Elyse Philippe</h4>
+          <p class="advisory-title">Director, Office of Arts &amp; Culture Dallas</p>
+          <p class="advisory-bio">15+ years in arts administration. Devoted to diversity, equity, and inclusion in art and culture.</p>
+        </article>
+        <article class="advisory-card reveal" style="transition-delay:0.16s">
+          <img src="https://assets.cdn.filesafe.space/AxLeagc9hye0zJda7oH7/media/69d83b2d1cad8f538a594c02.jpg" alt="Lily Cabatu Weiss" class="advisory-photo" width="100" height="100" loading="lazy">
+          <h4 class="advisory-name gradient-text">Lily Cabatu Weiss</h4>
+          <p class="advisory-title">Former Executive Director, Dallas Arts District</p>
+          <p class="advisory-bio">Four decades in arts education at Booker T. Washington High School for the Performing &amp; Visual Arts.</p>
+        </article>
+        <article class="advisory-card reveal" style="transition-delay:0.24s">
+          <img src="https://assets.cdn.filesafe.space/AxLeagc9hye0zJda7oH7/media/69d83b2d982fd67a35f7af57.jpg" alt="Joyce Seay Goss" class="advisory-photo" width="100" height="100" loading="lazy">
+          <h4 class="advisory-name gradient-text">Joyce Seay Goss</h4>
+          <p class="advisory-title">Texas Regional Director, Phillips Auctioneers</p>
+          <p class="advisory-bio">Director of The Goss-Michael Foundation. Helped launch MTV RE:DEFINE, raising over $12M for charitable causes.</p>
+        </article>
+        <article class="advisory-card reveal" style="transition-delay:0.32s">
+          <img src="https://assets.cdn.filesafe.space/AxLeagc9hye0zJda7oH7/media/69d85e89d7871cddf7eae9b5.jpeg" alt="Zach Hess" class="advisory-photo" width="100" height="100" loading="lazy">
+          <h4 class="advisory-name gradient-text">Zach Hess</h4>
+          <p class="advisory-title">Operatic Tenor &amp; Head of Sales, Customer First</p>
+          <p class="advisory-bio">Working operatic tenor on The Dallas Opera roster since 2012. Helped generate $10M+ in nonprofit support.</p>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MEMBERSHIP -->
+<section id="adi-membership" aria-labelledby="membership-heading">
+  <div class="container">
+    <div class="membership-header reveal">
+      <span class="section-label gradient-text">Membership</span>
+      <h2 class="membership-h2" id="membership-heading">The ADI Membership Program</h2>
+      <p class="membership-sub">A structured, value-driven framework for Artistic Directors at every stage.</p>
+      <span class="membership-badge">Membership valid for one year.</span>
+    </div>
+    <div class="membership-grid">
+      <!-- HORIZON -->
+      <div class="membership-card reveal" aria-label="Horizon membership tier">
+        <h3 class="card-tier gradient-text">Horizon</h3>
+        <p class="card-subtitle">Aspiring &amp; early-career Artistic Directors</p>
+        <p class="card-affil">(No affiliation)</p>
+        <p class="card-price">$200<span>/yr</span></p>
+        <p class="card-founding gradient-text">Founding Rate: $160</p>
+        <div class="card-divider"></div>
+        <ul class="card-list">
+          <li><span class="check" aria-hidden="true">&#10003;</span> Online community</li>
+          <li><span class="check" aria-hidden="true">&#10003;</span> Blogs and Newsletters</li>
+          <li><span class="check" aria-hidden="true">&#10003;</span> Directory listing</li>
+          <li><span class="check" aria-hidden="true">&#10003;</span> Online networking</li>
+        </ul>
+        <p class="card-section-label">Additional fees apply:</p>
+        <ul class="card-list">
+          <li><span style="color:#ccc" aria-hidden="true">&#183;</span> Live learning events</li>
+          <li><span style="color:#ccc" aria-hidden="true">&#183;</span> Learning resources</li>
+          <li><span style="color:#ccc" aria-hidden="true">&#183;</span> In-person networking</li>
+        </ul>
+        <div class="card-ctas">
+          <a href="https://link.fastpaydirect.com/payment-link/699a6df91a840074c2059d1a" class="gradient-btn" target="_blank" rel="noopener">Become a Member</a>
+        </div>
+      </div>
+
+      <!-- SUMMIT -->
+      <div class="membership-card reveal" style="transition-delay:0.12s" aria-label="Summit membership tier">
+        <h3 class="card-tier gradient-text">Summit</h3>
+        <p class="card-subtitle">Individual, experienced Artistic Directors</p>
+        <p class="card-affil">(No affiliation)</p>
+        <p class="card-price">$425<span>/yr</span></p>
+        <p class="card-founding gradient-text">Founding Rate: $341</p>
+        <div class="card-divider"></div>
+        <ul class="card-list">
+          <li><span class="check" aria-hidden="true">&#10003;</span> All Horizon Benefits</li>
+          <li><span class="check" aria-hidden="true">&#10003;</span> Directory access</li>
+        </ul>
+        <p class="card-section-label">10% discount on:</p>
+        <ul class="card-list">
+          <li><span style="color:#ccc" aria-hidden="true">&#183;</span> Live learning events</li>
+          <li><span style="color:#ccc" aria-hidden="true">&#183;</span> Learning resources</li>
+          <li><span style="color:#ccc" aria-hidden="true">&#183;</span> In-person networking</li>
+        </ul>
+        <div class="card-ctas">
+          <a href="https://link.fastpaydirect.com/payment-link/699a6e361a840053cc059d49" class="gradient-btn" target="_blank" rel="noopener">Become a Member</a>
+        </div>
+      </div>
+
+      <!-- PINNACLE -->
+      <div class="membership-card pinnacle reveal" style="transition-delay:0.24s" aria-label="Pinnacle membership tier - premium access">
+        <span class="pinnacle-badge">PREMIUM ACCESS</span>
+        <h3 class="card-tier gradient-text" style="margin-top:8px">Pinnacle</h3>
+        <p class="card-subtitle">Artistic Directors representing an organization.</p>
+        <p class="card-affil">&nbsp;</p>
+        <p class="card-price">$750+<span>/yr</span></p>
+        <p class="card-founding gradient-text">Founding from: $600</p>
+        <div class="card-divider"></div>
+        <ul class="card-list">
+          <li><span class="star" aria-hidden="true">&#9733;</span> All Summit Benefits</li>
+          <li><span class="star" aria-hidden="true">&#9733;</span> Up to 2 representatives (Artistic Director and/or Associate AD)</li>
+        </ul>
+        <p class="card-section-label">Fully Included:</p>
+        <ul class="card-list">
+          <li><span class="check" aria-hidden="true">&#10003;</span> Live learning events</li>
+          <li><span class="check" aria-hidden="true">&#10003;</span> Learning resources</li>
+          <li><span class="check" aria-hidden="true">&#10003;</span> In-person networking</li>
+          <li><span class="check" aria-hidden="true">&#10003;</span> Level recognition</li>
+          <li><span class="check" aria-hidden="true">&#10003;</span> Committee participation</li>
+        </ul>
+        <div class="card-ctas">
+          <a href="https://link.fastpaydirect.com/payment-link/699a6e6388a3f0e5e3861cef" class="gradient-btn" target="_blank" rel="noopener">Individual Member</a>
+          <a href="https://link.fastpaydirect.com/payment-link/699a6eed44f21f13f0db7734" class="gradient-btn" target="_blank" rel="noopener">Dual Rep Member</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENGAGE & LEARN -->
+<section id="adi-resources" aria-labelledby="engage-heading">
+  <div class="container">
+    <div class="engage-header reveal">
+      <h2 class="engage-h2 gradient-text" id="engage-heading">Engage &amp; Learn</h2>
+    </div>
+    <div class="engage-grid">
+      <div class="engage-card reveal">
+        <div class="engage-icon-wrap" aria-hidden="true">&#129309;</div>
+        <h3 class="engage-card-title">OffStage Networking</h3>
+        <p class="engage-card-body">Drop the titles and talk candidly. Connect with peers globally in an open, supportive environment designed for real conversation and lasting relationships.</p>
+        <a href="#hero" class="gradient-btn">Join Next Event</a>
+      </div>
+      <div class="engage-card reveal" style="transition-delay:0.12s">
+        <div class="engage-icon-wrap" aria-hidden="true">&#128240;</div>
+        <span class="coming-soon-badge"><span>Coming Soon</span></span>
+        <h3 class="engage-card-title">Newsletter</h3>
+        <p class="engage-card-body">Stay informed with curated sections from the Founders, Guest Writers, and timely industry alerts delivered directly to your inbox.</p>
+      </div>
+      <div class="engage-card reveal" style="transition-delay:0.24s">
+        <div class="engage-icon-wrap" aria-hidden="true">&#127891;</div>
+        <span class="coming-soon-badge"><span>Coming Soon</span></span>
+        <h3 class="engage-card-title">Academy</h3>
+        <p class="engage-card-body">Workshops and targeted leadership training designed to help artistic directors navigate the evolving challenges of the industry with confidence.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="adi-contact" aria-labelledby="contact-heading">
+  <div class="container">
+    <div class="contact-header reveal">
+      <h2 class="contact-h2 gradient-text" id="contact-heading">We would love to hear from you.</h2>
+      <a href="mailto:info@artisticdirectorsinternational.com" class="contact-email">info@artisticdirectorsinternational.com</a>
+    </div>
+
+    <form class="contact-form reveal" id="contactForm" novalidate aria-label="Contact form">
+      <div class="form-group" id="fg-name">
+        <label for="contact-name">Name</label>
+        <input type="text" id="contact-name" name="name" autocomplete="name" placeholder="Your full name" aria-required="true">
+        <p class="form-error-msg" role="alert">Please enter your name.</p>
+      </div>
+      <div class="form-group" id="fg-email">
+        <label for="contact-email">Email</label>
+        <input type="email" id="contact-email" name="email" autocomplete="email" placeholder="your@email.com" aria-required="true">
+        <p class="form-error-msg" role="alert">Please enter a valid email address.</p>
+      </div>
+      <div class="form-group" id="fg-subject">
+        <label for="contact-subject">Subject</label>
+        <input type="text" id="contact-subject" name="subject" placeholder="How can we help?" aria-required="true">
+        <p class="form-error-msg" role="alert">Please enter a subject.</p>
+      </div>
+      <div class="form-group" id="fg-message">
+        <label for="contact-message">Message</label>
+        <textarea id="contact-message" name="message" rows="5" placeholder="Your message..." aria-required="true"></textarea>
+        <p class="form-error-msg" role="alert">Please enter your message.</p>
+      </div>
+      <button type="submit" class="gradient-btn form-submit">Send Message</button>
+      <div class="form-success" id="formSuccess" role="status" aria-live="polite">
+        &#10003; Thank you! Your message has been sent. We will be in touch soon.
+      </div>
+    </form>
+
+    <div class="social-links reveal">
+      <a href="https://www.instagram.com/artisticdirectorsinternational/" class="social-link" target="_blank" rel="noopener" aria-label="Follow ADI on Instagram">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+      </a>
+      <a href="https://www.facebook.com/artisticdirectorsinternational" class="social-link" target="_blank" rel="noopener" aria-label="Follow ADI on Facebook">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+      </a>
+      <a href="https://www.linkedin.com/company/artistic-directors-international/about/" class="social-link" target="_blank" rel="noopener" aria-label="Follow ADI on LinkedIn">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer role="contentinfo">
+  <div class="container">
+    <div class="footer-logo">
+      <img src="https://storage.googleapis.com/msgsndr/AxLeagc9hye0zJda7oH7/media/6969bfa0b34b6437d5f7d1f2.png" alt="Artistic Directors International" height="40">
+    </div>
+    <p class="footer-tagline gradient-text">Learn. Lead. Inspire.</p>
+    <div class="footer-socials">
+      <a href="https://www.instagram.com/artisticdirectorsinternational/" class="footer-social" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+      </a>
+      <a href="https://www.facebook.com/artisticdirectorsinternational" class="footer-social" target="_blank" rel="noopener" aria-label="Facebook">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+      </a>
+      <a href="https://www.linkedin.com/company/artistic-directors-international/about/" class="footer-social" target="_blank" rel="noopener" aria-label="LinkedIn">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+      </a>
+    </div>
+    <p class="footer-copy">&#169; 2026 ADI &#8212; Artistic Directors International. All rights reserved.</p>
+    <div class="footer-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// NAV SCROLL SHADOW
+(function() {
+  var nav = document.getElementById('nav');
+  window.addEventListener('scroll', function() {
+    if (window.scrollY > 30) {
+      nav.classList.add('scrolled');
+    } else {
+      nav.classList.remove('scrolled');
+    }
+  }, { passive: true });
+})();
+
+// HAMBURGER / MOBILE NAV
+(function() {
+  var btn = document.getElementById('hamburger');
+  var overlay = document.getElementById('navOverlay');
+  var links = overlay.querySelectorAll('a');
+
+  function openMenu() {
+    overlay.classList.add('open');
+    btn.classList.add('open');
+    btn.setAttribute('aria-expanded', 'true');
+    btn.setAttribute('aria-label', 'Close menu');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMenu() {
+    overlay.classList.remove('open');
+    btn.classList.remove('open');
+    btn.setAttribute('aria-expanded', 'false');
+    btn.setAttribute('aria-label', 'Open menu');
+    document.body.style.overflow = '';
+  }
+
+  btn.addEventListener('click', function() {
+    if (overlay.classList.contains('open')) { closeMenu(); } else { openMenu(); }
+  });
+
+  links.forEach(function(link) { link.addEventListener('click', closeMenu); });
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && overlay.classList.contains('open')) { closeMenu(); btn.focus(); }
+  });
+})();
+
+// COUNTDOWN TIMER
+(function() {
+  var eventDate = new Date('2026-04-22T13:00:00-05:00').getTime();
+  var daysEl   = document.getElementById('cd-days');
+  var hoursEl  = document.getElementById('cd-hours');
+  var minsEl   = document.getElementById('cd-mins');
+  var secsEl   = document.getElementById('cd-secs');
+  var cdEl     = document.getElementById('countdown');
+  var concEl   = document.getElementById('event-concluded');
+
+  function pad(n) { return n < 10 ? '0' + n : '' + n; }
+
+  function tick() {
+    var diff = eventDate - Date.now();
+    if (diff <= 0) {
+      cdEl.style.display = 'none';
+      concEl.style.display = 'inline-block';
+      return;
+    }
+    daysEl.textContent  = pad(Math.floor(diff / 86400000));
+    hoursEl.textContent = pad(Math.floor((diff % 86400000) / 3600000));
+    minsEl.textContent  = pad(Math.floor((diff % 3600000) / 60000));
+    secsEl.textContent  = pad(Math.floor((diff % 60000) / 1000));
+  }
+
+  tick();
+  setInterval(tick, 1000);
+})();
+
+// BIO TOGGLE
+function toggleBio(id, btn) {
+  var bio = document.getElementById(id);
+  var expanded = btn.getAttribute('aria-expanded') === 'true';
+  if (expanded) {
+    bio.classList.remove('expanded');
+    btn.textContent = 'Read More';
+    btn.setAttribute('aria-expanded', 'false');
+  } else {
+    bio.classList.add('expanded');
+    btn.textContent = 'Read Less';
+    btn.setAttribute('aria-expanded', 'true');
+  }
+}
+
+// INTERSECTION OBSERVER (scroll reveal)
+(function() {
+  var elements = document.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window)) {
+    elements.forEach(function(el) { el.classList.add('visible'); });
+    return;
+  }
+  // Only hide elements if JS + IntersectionObserver are both working
+  document.body.classList.add('js-reveal-ready');
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0, rootMargin: '0px 0px 0px 0px' });
+  elements.forEach(function(el) { observer.observe(el); });
+})();
+
+// LAZY IMAGE FADE-IN
+(function() {
+  document.querySelectorAll('img[loading="lazy"]').forEach(function(img) {
+    if (img.complete) {
+      img.classList.add('loaded');
+    } else {
+      img.addEventListener('load', function() { img.classList.add('loaded'); });
+    }
+  });
+})();
+
+// CONTACT FORM
+(function() {
+  var form    = document.getElementById('contactForm');
+  var success = document.getElementById('formSuccess');
+
+  function validate(id, groupId, testFn) {
+    var input = document.getElementById(id);
+    var group = document.getElementById(groupId);
+    var ok = testFn(input.value.trim());
+    group.classList[ok ? 'remove' : 'add']('invalid');
+    return ok;
+  }
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    var v1 = validate('contact-name',    'fg-name',    function(v){ return v.length > 0; });
+    var v2 = validate('contact-email',   'fg-email',   function(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); });
+    var v3 = validate('contact-subject', 'fg-subject', function(v){ return v.length > 0; });
+    var v4 = validate('contact-message', 'fg-message', function(v){ return v.length > 10; });
+    if (v1 && v2 && v3 && v4) {
+      form.style.display = 'none';
+      success.classList.add('show');
+    }
+  });
+
+  var fields = [
+    { id: 'contact-name',    gid: 'fg-name',    fn: function(v){ return v.length > 0; } },
+    { id: 'contact-email',   gid: 'fg-email',   fn: function(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); } },
+    { id: 'contact-subject', gid: 'fg-subject', fn: function(v){ return v.length > 0; } },
+    { id: 'contact-message', gid: 'fg-message', fn: function(v){ return v.length > 10; } }
+  ];
+  fields.forEach(function(f) {
+    document.getElementById(f.id).addEventListener('blur', function() { validate(f.id, f.gid, f.fn); });
+  });
+})();
+</script>
+</body>
+</html>

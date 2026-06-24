@@ -1,0 +1,11 @@
+{
+  "name": "adi-website",
+  "version": "1.0.0",
+  "description": "Artistic Directors International website",
+  "scripts": {
+    "start": "npx serve . -l ${PORT:-3000} --no-clipboard"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
