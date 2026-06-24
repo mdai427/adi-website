@@ -227,20 +227,22 @@
 
   /* HERO */
   #hero {
-    background: var(--text);
+    background: #000;
     padding: 0;
-    margin-top: 72px;
+    margin-top: 0;
   }
 
   .hero-image-container {
     position: relative;
     border-radius: 0;
     overflow: hidden;
-    height: 640px;
+    height: 100svh;
+    min-height: 600px;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
+    padding-top: 70px; /* nav height offset */
   }
 
   .hero-bg {
@@ -1211,8 +1213,7 @@
   }
 
   @media (max-width: 600px) {
-    #hero { margin-top: 60px; }
-    .hero-image-container { height: 100svh; min-height: 500px; }
+    .hero-image-container { height: 100svh; min-height: 580px; padding-top: 60px; }
     .hero-card {
       padding: 28px 20px;
       width: calc(100% - 32px);
