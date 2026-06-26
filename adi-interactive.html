@@ -227,7 +227,7 @@
 
   /* HERO */
   #hero {
-    background: #000;
+    background: #0a0008;
     padding: 0;
     margin-top: 0;
   }
@@ -245,19 +245,12 @@
     padding-top: 70px; /* nav height offset */
   }
 
-  .hero-bg {
+  #hero-canvas {
     position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-  }
-
-  .hero-overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(0,0,0,0.48);
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 0;
+    will-change: transform;
   }
 
   .hero-card {
@@ -1349,13 +1342,7 @@
 <!-- HERO -->
 <section id="hero" aria-label="Hero section">
   <div class="hero-image-container">
-    <img
-      src="https://storage.googleapis.com/msgsndr/AxLeagc9hye0zJda7oH7/media/6969bf8c65d73df13ae810da.jpg"
-      alt="ADI artistic background"
-      class="hero-bg"
-      loading="eager"
-    >
-    <div class="hero-overlay" aria-hidden="true"></div>
+    <canvas id="hero-canvas" aria-hidden="true"></canvas>
     <div class="hero-card">
       <p class="hero-eyebrow gradient-text">Learn. Lead. Inspire</p>
       <h1 class="hero-heading gradient-text">OffStage Events</h1>
@@ -1863,6 +1850,110 @@ function toggleBio(id, btn) {
   });
 })();
 </script>
+<!-- HERO CANVAS ANIMATION -->
+<script>
+(function() {
+  var canvas = document.getElementById('hero-canvas');
+  var ctx = canvas.getContext('2d');
+  var dpr = window.devicePixelRatio || 1;
+  var W, H;
+
+  function resize() {
+    var rect = canvas.parentElement.getBoundingClientRect();
+    W = rect.width;
+    H = rect.height;
+    canvas.width  = W * dpr;
+    canvas.height = H * dpr;
+    canvas.style.width  = W + 'px';
+    canvas.style.height = H + 'px';
+    ctx.scale(dpr, dpr);
+    initParticles();
+  }
+
+  // Spotlights
+  var spotlights = [
+    { x: W * 0.25, angle: 0,    speed: 0.00035, radius: 420, color: [155, 89, 245],  alpha: 0.18, originY: -60 },
+    { x: W * 0.55, angle: 1.2,  speed: 0.00055, radius: 360, color: [201,169,110],   alpha: 0.14, originY: -40 },
+    { x: W * 0.78, angle: 2.5,  speed: 0.00042, radius: 480, color: [120, 60, 255],  alpha: 0.16, originY: -80 }
+  ];
+
+  // Particles
+  var particles = [];
+  function initParticles() {
+    particles = [];
+    for (var i = 0; i < 60; i++) {
+      particles.push(mkParticle(true));
+    }
+  }
+  function mkParticle(randomY) {
+    var gold = Math.random() > 0.5;
+    return {
+      x: Math.random() * (W || 800),
+      y: randomY ? Math.random() * (H || 600) : (H || 600) + 4,
+      r: 1 + Math.random() * 2,
+      vx: (Math.random() - 0.5) * 0.3,
+      vy: -(0.25 + Math.random() * 0.55),
+      alpha: 0.3 + Math.random() * 0.4,
+      color: gold ? '200,160,110' : '200,170,255'
+    };
+  }
+
+  var t = 0;
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+
+    // Dark background
+    ctx.fillStyle = '#0a0008';
+    ctx.fillRect(0, 0, W, H);
+
+    // Scan lines
+    ctx.fillStyle = 'rgba(0,0,0,0.08)';
+    for (var y = 0; y < H; y += 4) {
+      ctx.fillRect(0, y, W, 1);
+    }
+
+    // Spotlights
+    for (var s = 0; s < spotlights.length; s++) {
+      var sp = spotlights[s];
+      sp.angle += sp.speed;
+      var cx = (W * (s * 0.3 + 0.2)) + Math.sin(sp.angle) * W * 0.28;
+      var cy = H * 0.55 + Math.cos(sp.angle * 0.7) * H * 0.12;
+      var grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, sp.radius);
+      var c = sp.color;
+      grad.addColorStop(0,   'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',' + sp.alpha + ')');
+      grad.addColorStop(0.5, 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',' + (sp.alpha * 0.4) + ')');
+      grad.addColorStop(1,   'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',0)');
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.arc(cx, cy, sp.radius, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    // Particles
+    for (var p = 0; p < particles.length; p++) {
+      var pt = particles[p];
+      pt.x += pt.vx;
+      pt.y += pt.vy;
+      if (pt.y < -4) particles[p] = mkParticle(false);
+      ctx.beginPath();
+      ctx.arc(pt.x, pt.y, pt.r, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(' + pt.color + ',' + pt.alpha + ')';
+      ctx.fill();
+    }
+
+    t++;
+    requestAnimationFrame(draw);
+  }
+
+  resize();
+  window.addEventListener('resize', function() {
+    ctx.setTransform(1,0,0,1,0,0);
+    resize();
+  });
+  draw();
+})();
+</script>
+
 <!-- BACKGROUND MUSIC -->
 <audio id="bg-music" loop preload="auto">
   <source src="https://incompetech.com/music/royalty-free/mp3-royaltyfree/Inspired.mp3" type="audio/mpeg">
