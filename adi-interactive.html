@@ -1878,12 +1878,19 @@ function toggleBio(id, btn) {
     if (started) return;
     audio.play().then(function() {
       started = true;
-    }).catch(function() {});
+    }).catch(function() {
+      // Browsers block autoplay — wait for first interaction as fallback
+      ['click','scroll','keydown','touchstart'].forEach(function(evt) {
+        document.addEventListener(evt, function onInt() {
+          if (!started) { audio.play().then(function(){ started = true; }).catch(function(){}); }
+          document.removeEventListener(evt, onInt);
+        }, { passive: true });
+      });
+    });
   }
 
-  ['click','scroll','keydown','touchstart'].forEach(function(evt) {
-    document.addEventListener(evt, startMusic, { once: true, passive: true });
-  });
+  // Try auto-play after 2 seconds
+  setTimeout(startMusic, 2000);
 })();
 </script>
 </body>
