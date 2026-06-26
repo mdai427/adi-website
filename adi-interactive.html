@@ -665,18 +665,20 @@
   }
 
   .advisory-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    max-width: 900px;
+    margin: 0 auto;
   }
 
   .advisory-card {
     background: var(--white);
-    border-radius: var(--radius-lg);
-    padding: 28px 28px;
+    border-radius: 20px;
+    padding: 36px 40px;
     display: flex;
     align-items: flex-start;
-    gap: 20px;
+    gap: 40px;
     box-shadow: var(--shadow-card);
     transition: transform var(--transition), box-shadow var(--transition);
     text-align: left;
@@ -688,25 +690,27 @@
   }
 
   .advisory-photo {
-    width: 90px;
-    height: 90px;
-    min-width: 90px;
+    width: 200px;
+    height: 200px;
+    min-width: 200px;
     object-fit: cover;
     object-position: top center;
     border-radius: 50%;
-    border: 3px solid transparent;
+    border: 4px solid transparent;
     background: linear-gradient(white, white) padding-box,
                 linear-gradient(135deg, #ff0055, #8000ff, #0044ff) border-box;
     display: block;
-    transition: opacity 0.4s ease;
     opacity: 1;
   }
   .advisory-photo.loaded { opacity: 1; }
-  .advisory-card-info { flex: 1; min-width: 0; }
+  .advisory-card-info { flex: 1; min-width: 0; padding-top: 8px; }
 
   .advisory-name {
     text-align: left;
     font-family: 'DM Serif Display', serif;
+    -webkit-text-fill-color: initial;
+    background: none;
+    color: var(--text);
     font-size: 1.05rem;
     line-height: 1.3;
     margin-bottom: 6px;
@@ -715,13 +719,45 @@
   .advisory-title {
     font-family: 'Manrope', sans-serif;
     font-size: 0.78rem;
-    font-style: italic;
-    color: var(--text-muted);
-    margin-bottom: 10px;
+    font-weight: 700;
+    font-style: normal;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 14px;
     line-height: 1.4;
   }
 
   .advisory-bio {
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.92rem;
+    line-height: 1.75;
+    color: var(--text);
+    overflow: hidden;
+    max-height: 6em;
+    transition: max-height 0.5s ease;
+  }
+  .advisory-bio.expanded { max-height: 1000px; }
+
+  .advisory-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--text);
+    -webkit-text-fill-color: var(--text);
+    padding: 6px 0;
+    margin-top: 10px;
+    display: inline-block;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .advisory-bio-placeholder {
     font-family: 'Manrope', sans-serif;
     font-size: 0.82rem;
     color: var(--text);
@@ -1428,41 +1464,46 @@
         <article class="advisory-card reveal">
           <img src="https://assets.cdn.filesafe.space/AxLeagc9hye0zJda7oH7/media/69d83b0b9bcdf086d1f314d2.jpg" alt="Kirven Douthit-Boyd" class="advisory-photo" loading="lazy">
           <div class="advisory-card-info">
-            <h4 class="advisory-name gradient-text">Kirven Douthit-Boyd</h4>
+            <h4 class="advisory-name">Kirven Douthit-Boyd</h4>
             <p class="advisory-title">Artistic Director, Saint Louis Dance Theatre</p>
-            <p class="advisory-bio">Trained at The Ailey School, performed with Alvin Ailey American Dance Theater 2004–2015, earned MFA from Hollins University.</p>
+            <p class="advisory-bio" id="abio-kirven">Kirven Douthit-Boyd began his dance training at the Boston Arts Academy in 1999. He continued his dance education at Boston Youth Moves, and on scholarship at both The Boston Conservatory and The Ailey School. He has performed with Battleworks Dance Company, Ailey II, and the Alvin Ailey American Dance Theater from 2004–2015. He earned his MFA from Hollins University and is currently the Artistic Director of Saint Louis Dance Theatre.</p>
+            <button class="advisory-toggle" onclick="toggleAdvisoryBio('abio-kirven', this)">View Full Bio</button>
           </div>
         </article>
-        <article class="advisory-card reveal" style="transition-delay:0.08s">
+        <article class="advisory-card reveal">
           <img src="https://assets.cdn.filesafe.space/AxLeagc9hye0zJda7oH7/media/69d83b2dd5a667daf65ca3ad.jpg" alt="Martine Elyse Philippe" class="advisory-photo" loading="lazy">
           <div class="advisory-card-info">
-            <h4 class="advisory-name gradient-text">Martine Elyse Philippe</h4>
+            <h4 class="advisory-name">Martine Elyse Philippe</h4>
             <p class="advisory-title">Director, Office of Arts &amp; Culture Dallas</p>
-            <p class="advisory-bio">15+ years in arts administration. Devoted to diversity, equity, and inclusion in art and culture.</p>
+            <p class="advisory-bio" id="abio-martine">Martine Elyse Philippe is the Director of the Office of Arts &amp; Culture for the City of Dallas. With over 15 years of experience in arts administration, she has dedicated her career to fostering creative communities and advancing equity in arts and culture. She previously served as National Community Art Manager for A Window Between Worlds and has been a passionate advocate for diversity, equity, and inclusion across all artistic disciplines.</p>
+            <button class="advisory-toggle" onclick="toggleAdvisoryBio('abio-martine', this)">View Full Bio</button>
           </div>
         </article>
-        <article class="advisory-card reveal" style="transition-delay:0.16s">
+        <article class="advisory-card reveal">
           <img src="https://assets.cdn.filesafe.space/AxLeagc9hye0zJda7oH7/media/69d83b2d1cad8f538a594c02.jpg" alt="Lily Cabatu Weiss" class="advisory-photo" loading="lazy">
           <div class="advisory-card-info">
-            <h4 class="advisory-name gradient-text">Lily Cabatu Weiss</h4>
+            <h4 class="advisory-name">Lily Cabatu Weiss</h4>
             <p class="advisory-title">Former Executive Director, Dallas Arts District</p>
-            <p class="advisory-bio">Four decades in arts education at Booker T. Washington High School for the Performing &amp; Visual Arts.</p>
+            <p class="advisory-bio" id="abio-lily">Lily Cabatu Weiss brings four decades of expertise in arts education and leadership, most notably through her long tenure at Booker T. Washington High School for the Performing &amp; Visual Arts in Dallas. A dance graduate of Texas Woman's University, she later served as Executive Director of the Dallas Arts District, one of the largest urban arts districts in the nation. Her career reflects a deep commitment to arts access, education, and the cultural vitality of communities.</p>
+            <button class="advisory-toggle" onclick="toggleAdvisoryBio('abio-lily', this)">View Full Bio</button>
           </div>
         </article>
-        <article class="advisory-card reveal" style="transition-delay:0.24s">
+        <article class="advisory-card reveal">
           <img src="https://assets.cdn.filesafe.space/AxLeagc9hye0zJda7oH7/media/69d83b2d982fd67a35f7af57.jpg" alt="Joyce Seay Goss" class="advisory-photo" loading="lazy">
           <div class="advisory-card-info">
-            <h4 class="advisory-name gradient-text">Joyce Seay Goss</h4>
+            <h4 class="advisory-name">Joyce Seay Goss</h4>
             <p class="advisory-title">Texas Regional Director, Phillips Auctioneers</p>
-            <p class="advisory-bio">Director of The Goss-Michael Foundation. Helped launch MTV RE:DEFINE, raising over $12M for charitable causes.</p>
+            <p class="advisory-bio" id="abio-joyce">Joyce Seay Goss serves as Texas Regional Director for Phillips Auctioneers and is Director of The Goss-Michael Foundation, a Dallas-based contemporary art foundation. She was instrumental in launching MTV RE:DEFINE, the annual art auction and gala that has raised over $12 million for charitable causes. She serves on the Nasher Sculpture Center Advisory Council and The Family Place Foundation board, bringing her passion for the arts and philanthropy to every endeavor.</p>
+            <button class="advisory-toggle" onclick="toggleAdvisoryBio('abio-joyce', this)">View Full Bio</button>
           </div>
         </article>
-        <article class="advisory-card reveal" style="transition-delay:0.32s">
+        <article class="advisory-card reveal">
           <img src="https://assets.cdn.filesafe.space/AxLeagc9hye0zJda7oH7/media/69d85e89d7871cddf7eae9b5.jpeg" alt="Zach Hess" class="advisory-photo" loading="lazy">
           <div class="advisory-card-info">
-            <h4 class="advisory-name gradient-text">Zach Hess</h4>
+            <h4 class="advisory-name">Zach Hess</h4>
             <p class="advisory-title">Operatic Tenor &amp; Head of Sales, Customer First</p>
-            <p class="advisory-bio">Working operatic tenor on The Dallas Opera roster since 2012. Helped generate $10M+ in nonprofit support.</p>
+            <p class="advisory-bio" id="abio-zach">Zach Hess is a working operatic tenor who has been on The Dallas Opera roster since 2012. He served as a Dallas Arts and Culture Commissioner and has helped generate over $10 million in nonprofit support and more than $50 million in new corporate revenue throughout his career. His unique combination of artistic passion and business acumen makes him a valuable bridge between the arts community and the corporate world.</p>
+            <button class="advisory-toggle" onclick="toggleAdvisoryBio('abio-zach', this)">View Full Bio</button>
           </div>
         </article>
       </div>
@@ -1738,6 +1779,17 @@
 })();
 
 // BIO TOGGLE
+function toggleAdvisoryBio(id, btn) {
+  var bio = document.getElementById(id);
+  var expanded = bio.classList.contains('expanded');
+  if (expanded) {
+    bio.classList.remove('expanded');
+    btn.textContent = 'View Full Bio';
+  } else {
+    bio.classList.add('expanded');
+    btn.textContent = 'Show Less';
+  }
+}
 function toggleBio(id, btn) {
   var bio = document.getElementById(id);
   var expanded = btn.getAttribute('aria-expanded') === 'true';
