@@ -1253,7 +1253,6 @@
 
     .footer-inner { flex-direction: column; align-items: center; text-align: center; gap: 16px; }
 
-    #music-btn { bottom: 16px; left: 16px; padding: 10px 16px; font-size: 0.8rem; }
   }
 
   @media (max-width: 600px) {
@@ -1304,13 +1303,6 @@
     .section-h2 { font-size: 1.7rem; }
     .section-h2-italic { font-size: 1.7rem; }
 
-    #music-btn {
-      bottom: 12px;
-      left: 12px;
-      padding: 9px 14px;
-      font-size: 0.78rem;
-      gap: 5px;
-    }
   }
 
   @media (max-width: 380px) {
@@ -1872,101 +1864,26 @@ function toggleBio(id, btn) {
 })();
 </script>
 <!-- BACKGROUND MUSIC -->
-<audio id="bg-music" loop preload="auto" crossorigin="anonymous">
+<audio id="bg-music" loop preload="auto">
   <source src="https://incompetech.com/music/royalty-free/mp3-royaltyfree/Inspired.mp3" type="audio/mpeg">
-  <source src="https://incompetech.com/music/royalty-free/mp3-royaltyfree/Organic%20Meditations%201.mp3" type="audio/mpeg">
 </audio>
-
-<!-- MUSIC TOGGLE BUTTON -->
-<button id="music-btn" aria-label="Toggle background music" title="Toggle music">
-  <span id="music-icon">🎵</span>
-  <span id="music-label">Play Music</span>
-</button>
-
-<style>
-  #music-btn {
-    position: fixed;
-    bottom: 32px;
-    left: 32px;
-    z-index: 9999;
-    background: white;
-    border: 2px solid #8000ff;
-    border-radius: 50px;
-    padding: 12px 22px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    cursor: pointer;
-    box-shadow: 0 4px 24px rgba(128,0,255,0.25);
-    font-family: 'Manrope', sans-serif;
-    font-size: 0.88rem;
-    font-weight: 700;
-    color: #8000ff;
-    transition: all 0.3s ease;
-  }
-  #music-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 32px rgba(128,0,255,0.35);
-    background: linear-gradient(135deg, #fff0ff, #f0f0ff);
-  }
-  #music-btn.playing {
-    background: linear-gradient(135deg, #ff0055, #8000ff, #0044ff);
-    border-color: transparent;
-    color: white;
-    box-shadow: 0 6px 28px rgba(128,0,255,0.4);
-  }
-  #music-btn.playing #music-icon {
-    animation: bounce-note 0.8s ease-in-out infinite alternate;
-  }
-  @keyframes bounce-note {
-    from { transform: translateY(0) rotate(-5deg); }
-    to   { transform: translateY(-4px) rotate(5deg); }
-  }
-</style>
 
 <script>
 (function() {
-  var audio   = document.getElementById('bg-music');
-  var btn     = document.getElementById('music-btn');
-  var icon    = document.getElementById('music-icon');
-  var label   = document.getElementById('music-label');
-  var playing = false;
-
-  audio.volume = 0.2;
+  var audio = document.getElementById('bg-music');
+  var started = false;
+  audio.volume = 0.18;
 
   function startMusic() {
+    if (started) return;
     audio.play().then(function() {
-      playing = true;
-      btn.classList.add('playing');
-      icon.textContent = '🎵';
-      label.textContent = 'Music On';
-    }).catch(function(e) {
-      console.warn('Audio play failed:', e);
-    });
+      started = true;
+    }).catch(function() {});
   }
 
-  function stopMusic() {
-    audio.pause();
-    playing = false;
-    btn.classList.remove('playing');
-    icon.textContent = '🎵';
-    label.textContent = 'Play Music';
-  }
-
-  // Toggle on button click
-  btn.addEventListener('click', function(e) {
-    e.stopPropagation();
-    playing ? stopMusic() : startMusic();
+  ['click','scroll','keydown','touchstart'].forEach(function(evt) {
+    document.addEventListener(evt, startMusic, { once: true, passive: true });
   });
-
-  // Auto-start on first scroll or click anywhere else
-  function onFirstInteraction() {
-    if (!playing) startMusic();
-    document.removeEventListener('scroll', onFirstInteraction);
-    document.removeEventListener('keydown', onFirstInteraction);
-  }
-  document.addEventListener('scroll', onFirstInteraction, { once: true });
-  document.addEventListener('keydown', onFirstInteraction, { once: true });
 })();
 </script>
 </body>
